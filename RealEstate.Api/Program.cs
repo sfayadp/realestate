@@ -123,24 +123,6 @@ namespace RealEstate.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Endpoint raíz con información básica
-            app.MapGet("/", () => new
-            {
-                message = "RealEstate API v1",
-                version = "1.0.0",
-                environment = app.Environment.EnvironmentName,
-                endpoints = new
-                {
-                    swagger = "/swagger",
-                    health = "/health",
-                    authentication = "/api/authentication",
-                    realEstate = "/api/realEstate",
-                    metrics = "/metrics"
-                },
-                timestamp = DateTime.UtcNow
-            })
-            .WithName("Root")
-            .WithTags("Info");
 
             app.MapRealEstateEndpoints();
             app.MapAuthenticationEndpoints();
