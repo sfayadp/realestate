@@ -110,16 +110,37 @@ namespace RealEstate.Api
             app.UseMiddleware<MetricsMiddleware>();
             app.UseMiddleware<GlobalExceptionMiddleware>();
 
-            if (app.Environment.IsDevelopment())
+            // Habilitar Swagger en todos los ambientes
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "RealEstate API v1");
+                c.RoutePrefix = "swagger"; // Swagger UI estará disponible en /swagger
+            });
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Endpoint raíz con información básica
+            app.MapGet("/", () => new
+            {
+                message = "RealEstate API v1",
+                version = "1.0.0",
+                environment = app.Environment.EnvironmentName,
+                endpoints = new
+                {
+                    swagger = "/swagger",
+                    health = "/health",
+                    authentication = "/api/authentication",
+                    realEstate = "/api/realEstate",
+                    metrics = "/metrics"
+                },
+                timestamp = DateTime.UtcNow
+            })
+            .WithName("Root")
+            .WithTags("Info");
 
             app.MapRealEstateEndpoints();
             app.MapAuthenticationEndpoints();
