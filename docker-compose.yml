@@ -1,0 +1,53 @@
+# docker-compose.yml para RealEstate API con SQL Server
+
+services:
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: realestate-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      - ./RealEstateDB.sql:/docker-entrypoint-initdb.d/RealEstateDB.sql
+    networks:
+      - realestate-network
+    restart: unless-stopped
+
+  # RealEstate API
+  realestate-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: realestate-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7288;http://+:7289
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=RealEstateDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;MultipleActiveResultSets=true
+      - JWT__Secret=7h3=Dr34m=734m=Sk4nD14=api_RealEstate2024!
+      - JWT__Expire=30
+      - JWT__Issuer=https://localhost:7288/
+      - JWT__Audience=https://localhost:7288/
+      - JWT__Scopes=AQ
+      - Password=B9KhlTBu8K2N/XaoT/rxUQ==
+      - DbSetting__ConnectionString=yD00gz9wj1cyI2AClEgGknc244AFidCgXkZRuCzMLSebNgWz53WMQOr0/TqZO/rNiQ8hXSBd4bKyD+5OkqmrNFLr/rc5X3GExIQze9AlOX2UpTOrUzLH8+FqvRuv+Kq5w/1NFnMdu5FWpKa/Ja6Pww==
+      - DbSetting__KeyEncrypt=_RealEstate
+    ports:
+      - "7288:7288"
+      - "7289:7289"
+    depends_on:
+      - sqlserver
+    networks:
+      - realestate-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  realestate-network:
+    driver: bridge
