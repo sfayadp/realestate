@@ -13,10 +13,36 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
-      - ./RealEstateDB.sql:/docker-entrypoint-initdb.d/RealEstateDB.sql
+      - ./RealEstateDB.sql:/usr/src/RealEstateDB.sql
     networks:
       - realestate-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd -C -Q 'SELECT 1' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Database Initialization
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: realestate-db-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c "
+        echo 'Waiting for SQL Server to be ready...'
+        sleep 15
+        echo 'Executing database initialization script...'
+        /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P 'YourStrong@Passw0rd' -C -i /usr/src/RealEstateDB.sql
+        echo 'Database initialization completed!'
+      "
+    volumes:
+      - ./RealEstateDB.sql:/usr/src/RealEstateDB.sql
+    networks:
+      - realestate-network
 
   # RealEstate API
   realestate-api:
@@ -26,21 +52,20 @@ services:
     container_name: realestate-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:7288;http://+:7289
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=RealEstateDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;MultipleActiveResultSets=true
+      - ASPNETCORE_URLS=http://+:7288
+      - DbSetting__ConnectionString=nNPnt6/8uQNmU2OU9RI1ZCFlPw8qN6/cNnsy2rCpHW8QtvvP84VWXdtRCN5ConKVNDvzEsTaPWBVdW0LU53BQ1RVwEnTRYBJkMFIPzWLrA8a4+nu2tgtex0igXReBLrZlkH1P211IS1lpeYx8GMZESM0yzCVGZeu1FfohXj0a6Qh6k/WgWBNYJOnWKQCZYHa
       - JWT__Secret=7h3=Dr34m=734m=Sk4nD14=api_RealEstate2024!
       - JWT__Expire=30
       - JWT__Issuer=https://localhost:7288/
       - JWT__Audience=https://localhost:7288/
       - JWT__Scopes=AQ
       - Password=B9KhlTBu8K2N/XaoT/rxUQ==
-      - DbSetting__ConnectionString=yD00gz9wj1cyI2AClEgGknc244AFidCgXkZRuCzMLSebNgWz53WMQOr0/TqZO/rNiQ8hXSBd4bKyD+5OkqmrNFLr/rc5X3GExIQze9AlOX2UpTOrUzLH8+FqvRuv+Kq5w/1NFnMdu5FWpKa/Ja6Pww==
       - DbSetting__KeyEncrypt=_RealEstate
     ports:
       - "7288:7288"
-      - "7289:7289"
     depends_on:
-      - sqlserver
+      db-init:
+        condition: service_completed_successfully
     networks:
       - realestate-network
     restart: unless-stopped

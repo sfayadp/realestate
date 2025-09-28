@@ -9,6 +9,7 @@ Una API REST moderna para la gestión de propiedades inmobiliarias construida co
 - [Arquitectura](#-arquitectura)
 - [Instalación](#-instalación)
 - [Configuración](#-configuración)
+- [Docker](#-docker)
 - [Uso de la API](#-uso-de-la-api)
 - [Endpoints](#-endpoints)
 - [Autenticación](#-autenticación)
@@ -171,6 +172,34 @@ string decryptedConnection = SecureCryptoHelper.Decrypt(encryptedConnection, "_R
 - `ASPNETCORE_ENVIRONMENT` - Ambiente (Development/Production)
 - `DbSetting__ConnectionString` - Cadena de conexión encriptada de BD (usar SecureCryptoHelper.Encrypt)
 - `DbSetting__KeyEncrypt` - Clave para desencriptar la cadena de conexión (por defecto: "_RealEstate")
+
+## 🐳 Docker
+
+Ejecutar la aplicación con Docker es súper fácil:
+
+### Comando Único
+```bash
+docker-compose up --build
+```
+
+### URLs de Acceso
+- **API**: `http://localhost:7288`
+- **Swagger**: `http://localhost:7288/swagger`
+- **Health**: `http://localhost:7288/health`
+
+### Comandos Útiles
+```bash
+# Parar servicios
+docker-compose down
+
+# Ver logs
+docker-compose logs -f
+
+# Reiniciar limpio
+docker-compose down -v && docker-compose up --build
+```
+
+¡Eso es todo! Docker se encarga de SQL Server, la base de datos y la API automáticamente.
 
 ## 📖 Uso de la API
 

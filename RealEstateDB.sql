@@ -19,6 +19,8 @@ CREATE TABLE dbo.Owner (
 );
 GO
 
+INSERT [dbo].[Owner] ([Name], [Address], [Photo], [Birthday]) VALUES ('Stefan Fayad', 'Lorica', NULL, CAST(N'1994-07-10' AS Date))
+
 CREATE TABLE dbo.[Property] (
     IdProperty   INT IDENTITY(1,1) NOT NULL,
     [Name]       NVARCHAR(150)     NOT NULL,

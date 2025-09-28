@@ -2,7 +2,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 7288
-EXPOSE 7289
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
@@ -32,6 +31,6 @@ COPY --from=publish /app/publish .
 
 # Variables de entorno por defecto
 ENV ASPNETCORE_ENVIRONMENT=Production
-ENV ASPNETCORE_URLS=https://+:7288;http://+:7289
+ENV ASPNETCORE_URLS=http://+:7288
 
 ENTRYPOINT ["dotnet", "RealEstate.Api.dll"]

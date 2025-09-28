@@ -15,18 +15,21 @@ namespace RealEstate.Infrastructure.Repository
 
         public async Task<OwnerDTO> GetOwnerAsync(int ownerId)
         {
-            OwnerDTO response = new OwnerDTO();
-
             Owner? owner = await _dbContext.Owner.FirstOrDefaultAsync(x => x.IdOwner == ownerId);
 
-            if (owner is Owner)
+            if (owner == null)
             {
-                response.IdOwner = owner.IdOwner;
-                response.Name = owner.Name;
-                response.Address = owner.Address;
-                response.Photo = owner.Photo;
-                response.Birthday = owner.Birthday;
+                throw new InvalidOperationException($"Owner con ID {ownerId} no existe");
             }
+
+            OwnerDTO response = new OwnerDTO
+            {
+                IdOwner = owner.IdOwner,
+                Name = owner.Name,
+                Address = owner.Address,
+                Photo = owner.Photo,
+                Birthday = owner.Birthday
+            };
 
             return response;
         }
