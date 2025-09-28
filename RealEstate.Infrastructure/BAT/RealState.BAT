@@ -1,0 +1,1 @@
+Scaffold-DbContext "Server=localhost;Database=RealEstateDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -contextDir Contexts -OutputDir Models\RealEstate -UseDatabaseNames -NoPluralize -Tables Owner, Property, PropertyImage, PropertyTrace -f -Context RealEstateDbContext -NoOnConfiguring

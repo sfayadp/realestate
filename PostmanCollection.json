@@ -1,0 +1,732 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "RealEstate API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/authentication/Authenticate": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/realEstate/CreateProperty": {
+      "post": {
+        "tags": [
+          "RealEstate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/realEstate/AddImageProperty": {
+      "post": {
+        "tags": [
+          "RealEstate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddImageRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/realEstate/ChangePrice": {
+      "post": {
+        "tags": [
+          "RealEstate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePriceRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/realEstate/UpdateProperty": {
+      "post": {
+        "tags": [
+          "RealEstate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/realEstate/ListPropertyWithFilters": {
+      "post": {
+        "tags": [
+          "RealEstate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyFilterDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyDTOPagedResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "Health Checks"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sistema funcionando correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sistema con problemas"
+          }
+        }
+      }
+    },
+    "/health/detailed": {
+      "get": {
+        "tags": [
+          "Health Checks"
+        ],
+        "responses": {
+          "200": {
+            "description": "Información detallada de salud del sistema",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailedHealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/ping": {
+      "get": {
+        "tags": [
+          "Health Checks"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sistema funcionando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sistema con problemas"
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Métricas obtenidas exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/cache": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Métricas de cache obtenidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CacheMetricsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/requests": {
+      "get": {
+        "tags": [
+          "Metrics"
+        ],
+        "responses": {
+          "200": {
+            "description": "Métricas de requests obtenidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestMetricsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddImageRequestDTO": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageFile": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationRequestDTO": {
+        "type": "object",
+        "properties": {
+          "ownerId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChangePriceRequestDTO": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "newPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax": {
+            "type": "number",
+            "format": "double"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateSale": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "codeInternal": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idOwner": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyImageDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyDTOPagedResult": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyDTO"
+            },
+            "nullable": true
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyFilterDTO": {
+        "type": "object",
+        "properties": {
+          "idOwner": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codeInternal": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameContains": {
+            "type": "string",
+            "nullable": true
+          },
+          "minPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "maxPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "minYear": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxYear": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "hasImages": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "imageEnabled": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trackEntities": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyImageDTO": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Estado del sistema (Healthy, Degraded, Unhealthy)"
+          },
+          "totalDuration": {
+            "type": "number",
+            "format": "double",
+            "description": "Duración total de los health checks en milisegundos"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp de la verificación"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HealthCheckEntry"
+            },
+            "description": "Lista de health checks individuales"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetailedHealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Estado del sistema"
+          },
+          "totalDuration": {
+            "type": "number",
+            "format": "double",
+            "description": "Duración total en milisegundos"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "string",
+            "description": "Versión de la aplicación"
+          },
+          "environment": {
+            "type": "string",
+            "description": "Entorno de ejecución"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailedHealthCheckEntry"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "PingResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "OK o FAIL"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HealthCheckEntry": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nombre del health check"
+          },
+          "status": {
+            "type": "string",
+            "description": "Estado del health check"
+          },
+          "duration": {
+            "type": "number",
+            "format": "double",
+            "description": "Duración en milisegundos"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Descripción del estado"
+          },
+          "data": {
+            "type": "object",
+            "nullable": true,
+            "description": "Datos adicionales"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetailedHealthCheckEntry": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "exception": {
+            "type": "string",
+            "nullable": true,
+            "description": "Mensaje de excepción si hay error"
+          },
+          "data": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MetricsResponse": {
+        "type": "object",
+        "properties": {
+          "total_requests": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total de requests procesados"
+          },
+          "cache_hits": {
+            "type": "object",
+            "description": "Hits de cache por clave"
+          },
+          "cache_misses": {
+            "type": "object",
+            "description": "Misses de cache por clave"
+          },
+          "cache_hit_rate_percent": {
+            "type": "number",
+            "format": "double",
+            "description": "Porcentaje de hit rate del cache"
+          },
+          "request_counts": {
+            "type": "object",
+            "description": "Conteo de requests por endpoint"
+          },
+          "average_request_durations": {
+            "type": "object",
+            "description": "Duración promedio por endpoint"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": true
+      },
+      "CacheMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "hits": {
+            "type": "object",
+            "description": "Hits de cache por clave"
+          },
+          "misses": {
+            "type": "object",
+            "description": "Misses de cache por clave"
+          },
+          "hitRate": {
+            "type": "number",
+            "format": "double",
+            "description": "Porcentaje de hit rate"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RequestMetricsResponse": {
+        "type": "object",
+        "properties": {
+          "totalRequests": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total de requests"
+          },
+          "requestCounts": {
+            "type": "object",
+            "description": "Conteo por endpoint"
+          },
+          "averageDurations": {
+            "type": "object",
+            "description": "Duración promedio por endpoint"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
